@@ -1,7 +1,7 @@
 // Q1
 const member = {
-  id : 1001,
-  password : 1234,
+  id : "1001",
+  password : "1234",
   grade : "silver",
   name : "홍길동",
   phone : "010-1234-5678"
@@ -16,7 +16,7 @@ const products = {
 
 const order = {
   orderName : "",
-  num : 1,
+  quantity : 1,
   price : 10000,
   buyer : "",
   date : "",
@@ -47,4 +47,10 @@ console.log(product);
 
 // Q3
 const foodList = ['Pizza','Hamburger','Chicken','Steak'];
-console.log(foodList[0] + " " + foodList[3]);
+
+const food1 = foodList[0];
+const food2 = foodList[foodList.length - 1];
+
+const result = food1 + ' ' + food2;
+
+console.log(result);
