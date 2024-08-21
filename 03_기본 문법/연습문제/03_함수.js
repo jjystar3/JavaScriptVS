@@ -17,8 +17,8 @@ console.log(sum(3,5));
 // Q10
 const arr1 = [-1,5,10,-3];
 function max(arr) {
-  let max = 0;
-  for (let i = 0; i < arr.length; i++){
+  let max = arr[0];
+  for (let i = 1; i < arr.length; i++){
     if(arr[i] > max){
       max = arr[i];
     }
@@ -30,24 +30,20 @@ console.log(max(arr1));
 // Q11
 const arr2 = ["a","b","c"];
 function chackType(arr) {
-  let isSame = true;
+  let firstType = typeof arr[0];
   for (let i = 1; i < arr.length; i++){
-    if(typeof arr[i-1] != typeof arr[i]){
-      isSame = false;
+    if(typeof arr[i] !== firstType){
+      return false;
     }
   }
-  return isSame;
+  return true;
 }
 console.log(chackType(arr2));
 
 // Q12
 const arr3 = ["apple","banana","cherry"];
 function checkArr(arr, value) {
-  let isExist = false;
-  if(arr.includes(value)){
-    isExist = true;
-  }
-  return isExist;
+  return arr.includes(value);
 }
 console.log(checkArr(arr3,"banana"));
 
@@ -75,10 +71,10 @@ console.log(pickString(arr4));
 
 // Q15
 function Factorial(num) {
-  if(num > 1){
-    num *= Factorial(num-1);
+  if(num == 1){
+    return 1;
   }
-  return num;
+  return num *= Factorial(num-1);
 }
 console.log(Factorial(5));
 
