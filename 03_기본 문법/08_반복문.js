@@ -63,3 +63,9 @@ let arr = [3,4,5];
 for(let i in arr){ // 변수 in 배열
   console.log(i + ", " + arr[i]);
 }
+
+/* for-of문 */
+for (let v of arr){
+  // 배열을 순회하면서 값을 꺼냄
+  console.log(v);
+}
