@@ -75,11 +75,10 @@ console.log(pickString(arr4));
 
 // Q15
 function Factorial(num) {
-  let mul = 1;
-  for(let i=1;i<=num;i++){
-    mul*=i;
+  if(num > 1){
+    num *= Factorial(num-1);
   }
-  return mul;
+  return num;
 }
 console.log(Factorial(5));
 
