@@ -1,16 +1,27 @@
 // Q7
 let arr1 = [10,15,20,25,30];
+// let pass = arr1.filter(
+//   function (num) {
+//     return num > 20;
+//   }
+// );
+// let newPass = pass.map(
+//   function (num) {
+//     return num * 2;
+//   }
+// );
+
+// 체이닝 기법: 코드가 더 간결해짐
 let pass = arr1.filter(
   function (num) {
     return num > 20;
   }
-);
-let newPass = pass.map(
+).map(
   function (num) {
     return num * 2;
   }
 );
-console.log(newPass);
+console.log(pass);
 
 // Q8
 let str1 = "hello world welcome to programming";
@@ -136,42 +147,53 @@ const inventory = [
 inventory.push({product: "바나나킥", quantity: 50, price: 1000});
 console.log("새로운 제품 추가:", inventory);
 
-const addStr = function (stock) {
-  let str = "";
-  if(stock > 0){
-    str = "(재고있음) ";
+inventory.forEach((item) => {
+  if(item.quantity>0){
+    item.product = `(제고있음) ${item.product}`;
   }
-  return str;
-}
-let checkQuantity = inventory.map(
-  function (prod) {
-    return {
-      product: addStr(prod.quantity) + prod.product,
-      quantity: prod.quantity,
-      price: prod.price
-    };
-  }
-);
-console.log("재고가 있는 제품의 이름 변경:", checkQuantity);
+});
 
-const discount = function (stock, price) {
-  if(stock > 10){
-    price -= price * 0.1;
-  }
-  return price;
-}
-let discountProd = checkQuantity.map(
-  function (prod) {
-    return {
-      product: prod.product,
-      quantity: prod.quantity,
-      price: discount(prod.quantity, prod.price)
-    };
-  }
-);
-console.log("재고가 10개가 넘는 제품의 가격 할인:", discountProd);
+// const addStr = function (stock) {
+//   let str = "";
+//   if(stock > 0){
+//     str = "(재고있음) ";
+//   }
+//   return str;
+// }
+// let checkQuantity = inventory.map(
+//   function (prod) {
+//     return {
+//       product: addStr(prod.quantity) + prod.product,
+//       quantity: prod.quantity,
+//       price: prod.price
+//     };
+//   }
+// );
+console.log("재고가 있는 제품의 이름 변경:", inventory);
 
-let sum2 = discountProd.reduce(  
+// const discount = function (stock, price) {
+//   if(stock > 10){
+//     price -= price * 0.1;
+//   }
+//   return price;
+// }
+// let discountProd = inventory.map(
+//   function (prod) {
+//     return {
+//       product: prod.product,
+//       quantity: prod.quantity,
+//       price: discount(prod.quantity, prod.price)
+//     };
+//   }
+// );
+inventory.forEach((item) => {
+  if(item.quantity>10){
+    item.price -= item.price * 0.1;
+  }
+});
+console.log("재고가 10개가 넘는 제품의 가격 할인:", inventory);
+
+let sum2 = inventory.reduce(  
   function (total, currentValue) {
     return total + (currentValue.price * currentValue.quantity);
   }, 0
