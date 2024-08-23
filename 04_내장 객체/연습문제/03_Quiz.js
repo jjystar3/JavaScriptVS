@@ -1,7 +1,13 @@
 // Q13
 let date1 = new Date();
-let currentTime = date1.getFullYear() + "-" + (date1.getMonth() + 1) + "-" + date1.getDate() + " " + date1.getHours() + ":" + date1.getMinutes() + ":" + date1.getSeconds();
-console.log("현재 날짜와 시간:",currentTime);
+let currentTime =
+  date1.getFullYear() + "-" +
+  (date1.getMonth() + 1) + "-" +
+  date1.getDate() + " " +
+  date1.getHours() + ":" +
+  date1.getMinutes() + ":" +
+  date1.getSeconds();
+console.log("현재 날짜와 시간:", currentTime);
 
 // Q14
 let date2 = new Date(2024, 0, 1, 9, 0, 0, 0);
