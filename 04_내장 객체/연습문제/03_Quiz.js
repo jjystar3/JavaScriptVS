@@ -29,32 +29,24 @@ const visits = [
   {name: "정민호", date: "2024-08-17", purpose: "상담"}
 ];
 
-visits.sort(
-  function (a, b) {
-    let dateA = new Date(a.date);
-    let dateB = new Date(b.date);
-    return dateA - dateB;
-  }
+visits.sort((a, b) =>
+    Date(a.date) - Date(b.date)  
 );
 console.log("정렬된 방문 기록:", visits);
 
-let visitFilter = visits.filter(
-  function (visit) {
-    return visit.purpose == "회의";
-  }
+let visitFilter = visits.filter((visit) =>
+    visit.purpose === "회의"  
 );
 console.log("회의 목적의 방문 기록:", visitFilter);
 
-let visitMap = visitFilter.map(
-  function (visit) {
-    let date = new Date(visit.date);
-    return {
-      name: visit.name,
-      year: date.getFullYear(),
-      month: date.getMonth() + 1,
-      day: date.getDate(),
-      purpose: visit.purpose
-    };
-  }
-);
+let visitMap = visitFilter.map((visit) => {
+  let date = new Date(visit.date);
+  return {
+    name: visit.name,
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+    purpose: visit.purpose
+  };
+});
 console.log("형식이 변환된 방문 기록:", visitMap);
