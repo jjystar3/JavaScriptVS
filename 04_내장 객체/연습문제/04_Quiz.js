@@ -149,7 +149,7 @@ let grade = new Map();
 student.forEach(function (value) {
   let count = 1;
   if(grade.has(value.grade)){
-    count++;
+    count = grade.get(value.grade) + 1;
   }
   grade.set(value.grade, count);
 });
