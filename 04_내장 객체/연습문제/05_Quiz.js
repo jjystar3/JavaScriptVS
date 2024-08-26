@@ -31,22 +31,20 @@ for(let i=0; i<10; i++){
 console.log("10번 던진 결과:", diceResults);
 
 // Q28
-let player1 = [];
-let sum1 = 0;
-
-let player2 = [];
-let sum2 = 0;
-
-for(let i=0; i<3; i++){
-  let randomDiceNum = randomIntFromInterval(1, 6);
-  sum1 += randomDiceNum;
-  player1.push(randomDiceNum);
+function rollDice(times){
+  const arr = [];
+  for(let i=0; i<times;i++){
+    let num = randomIntFromInterval(1, 6);
+    arr.push(num);
+  }
+  return arr;
 }
-for(let i=0; i<3; i++){
-  let randomDiceNum = randomIntFromInterval(1, 6);
-  sum2 += randomDiceNum;
-  player2.push(randomDiceNum);
-}
+
+const player1 = rollDice(3);
+const player2 = rollDice(3);
+
+const sum1 = player1.reduce((sum, n) => sum + n, 0);
+const sum2 = player2.reduce((sum, n) => sum + n, 0);
 
 console.log("Player 1의 주사위 결과:", player1, "합:", sum1);
 console.log("Player 2의 주사위 결과:", player2, "합:", sum2);
@@ -58,3 +56,36 @@ if(sum1 > sum2){
 }else{
   console.log("무승부!");
 }
+
+/*
+let players = new Map();
+
+players.set("Player 1", 0);
+players.set("Player 2", 0);
+
+function throwDice(player, times) {
+  for (let [key, value] of player) {
+    let diceResult = [];
+    let sum = 0;
+    for(let i=0; i<times; i++){
+      let randomDiceNum = randomIntFromInterval(1, 6);
+      sum += randomDiceNum;
+      diceResult.push(randomDiceNum);
+    }
+    console.log(key + "의 주사위 결과:", diceResult, "합:", sum);
+    player.set(key, sum);
+  }
+  let max = 0;
+  let winner = "";
+  for (let [key, value] of player) {
+    if(value > max){
+      max = value;
+      winner = key;
+    }
+  }
+  console.log(winner + " 승리!");
+}
+
+throwDice(players, 3);
+
+*/
