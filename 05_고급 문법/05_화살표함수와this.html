@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <button id="btn1">버튼1</button>
+  <button id="btn2">버튼2</button>
+
+  <script>
+    // 화면이 로드될때 이벤트 처리
+    document.addEventListener("DOMContentLoaded", () => {
+
+      // 각 버튼에서 클릭 이벤트 처리
+      const btn1 = document.getElementById("btn1");
+      const btn2 = document.getElementById("btn2");
+
+      // 일반함수와 화살표함수의 this 동작 차이
+      // 일반함수에서 this: 이벤트가 발생한 DOM 요소를 가리킴
+      btn1.onclick = function(){
+        console.log(this);
+        this.textContent = "버튼이름변경";
+      };
+
+      // 화살표함수에서 this: 상위 스코프의 this를 가리킴
+      btn2.onclick = () => {
+        console.log(this);
+      };
+
+      // DOM 요소에서 작업을 처리하려면 일반함수를 사용하는 것이 좋다
+
+    });
+    
+  </script>
+
+</body>
+</html>
