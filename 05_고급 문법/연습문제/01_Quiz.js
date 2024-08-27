@@ -18,28 +18,15 @@ calculateGrade("훈이", 80);
 console.log();
 // Q3
 function createSentence(ignore, ...words){
-  let total = "";
-  for(let i=0; i< words.length; i++){
-    if(i!=0){
-      total += " ";
-    }
-    total += words[i];
-  }
-  return total;
+  let sentence = words.join(" ");
+  return sentence;
 }
 console.log(createSentence("Hello","this","is","JavaScript"));
 
 console.log();
 // Q4
 function printPerson(name, age, ...hobby){
-  let total = "";
-  for(let i=0; i< hobby.length; i++){
-    if(i!=0){
-      total += ", ";
-    }
-    total += hobby[i];
-  }
-  console.log(name + "의 나이는 " + age + "살이고, 취미는 " + total + "입니다.")
+  console.log(name + "의 나이는 " + age + "살이고, 취미는 " + hobby.join(", ") + "입니다.")
 }
 printPerson("맹구", 5, "축구", "독서", "영화 감상");
 printPerson("유리", 5, "소꿉놀이");
