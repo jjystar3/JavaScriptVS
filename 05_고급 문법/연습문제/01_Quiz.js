@@ -5,6 +5,7 @@ function greet(name, words = "안녕하세요"){
 console.log(greet("철수", "반갑습니다"));
 console.log(greet("훈이"));
 
+console.log();
 // Q2
 function calculateGrade(name, eng = 0, math = 0, kor = 0){
   let total = eng + math + kor;
@@ -14,6 +15,7 @@ function calculateGrade(name, eng = 0, math = 0, kor = 0){
 calculateGrade("철수", 85, 90, 78);
 calculateGrade("훈이", 80);
 
+console.log();
 // Q3
 function createSentence(ignore, ...words){
   let total = "";
@@ -27,6 +29,7 @@ function createSentence(ignore, ...words){
 }
 console.log(createSentence("Hello","this","is","JavaScript"));
 
+console.log();
 // Q4
 function printPerson(name, age, ...hobby){
   let total = "";
@@ -41,6 +44,7 @@ function printPerson(name, age, ...hobby){
 printPerson("맹구", 5, "축구", "독서", "영화 감상");
 printPerson("유리", 5, "소꿉놀이");
 
+console.log();
 // Q5
 const students = [
   {name: "짱구", eng: 80, math: 50, kor: 70},
@@ -51,7 +55,10 @@ const students = [
 ];
 
 console.log("학생 목록:");
-console.log(students);
+for(let student of students){
+  console.log(student);
+}
+console.log();
 
 function calcGrade(subject, ...names){
   let sum = 0;
