@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    // 1.XMLHttpRequest를 사용하여 API 호출하기
+    // API: 데이터를 제공하는 서버의 프로그램
+    function getData(){
+      // XMLHttpRequest 객체: 서버와 데이터를 주고받기 위해 사용되는 객체
+      const xhr = new XMLHttpRequest();
+
+      // open(): HTTP 요청 설정 (메소드와 URL)
+      xhr.open("GET", "https://jsonplaceholder.typicode.com/posts/1");
+
+      xhr.send(); // 요청 전송
+
+      // onload(): 응답이 완료되었을 때 호출되는 함수
+      xhr.onload = () => {
+
+        // xhr.status: 응답메세지의 상태코드
+        if(xhr.status === 200){
+          // 정상적으로 응답을 받았을 경우
+          // xhr.response: 응답메세지의 데이터
+          // 응답데이터를 객체로 변환하여 출력
+          const res = JSON.parse(xhr.response);
+          return res;
+        }else{
+          // 요청에 실패한 경우
+          console.error(xhr.status, xhr.statusText);
+          // 에러코드와 에러메세지 출력
+          return;
+        }
+
+      };
+
+    }
+
+    // 함수 호출 후 응답 데이터를 저장하려고 시도
+    // 하지만 이 시점에는 서버로부터 응답이 도착하지 않았기 때문에 undefined가 저장된다
+    // XMLHtmlRequest는 비동기 방식으로 요청을 처리하기 때문에, 응답이 올때까지 기다리지 않고 바로 다음코드가 실행된다
+    // 따라서 요청 직후에는 응답 데이터를 바로 사용할 수 없다
+    let res = getData();
+    console.log(res); // undefined
+
+    // 2.Promise를 함께 사용하여 API 호출하기
+    function getDataPromise(){
+      // Promise 객체 생성
+      // 인자: 요청을 처리할 함수
+      const promise = new Promise(
+        // resolve와 reject.. 응답받은 데이터를 처리할 객체
+        (resolve, reject) => {
+
+          // get 요청
+          const xhr = new XMLHttpRequest();
+          xhr.open("GET", "https://jsonplaceholder.typicode.com/posts/1");
+          xhr.send();
+
+          // 응답받은 데이터 처리
+          xhr.onload = () => {
+            if(xhr.status === 200){
+              const res = JSON.parse(xhr.response);
+              resolve(res); //응답 데이터를 Promise의 resolve함수로 전달
+            }else{
+              console.error(xhr.status, xhr.statusText);
+              reject(xhr.status); //오류 상태를 Promise의 reject함수로 전달
+            }
+          };
+        }
+      );
+      return promise;
+    }
+
+    // 반환된 promise객체 저장
+    let promise = getDataPromise();
+
+    console.log(1);
+    console.log(2);
+    console.log(3);
+
+
+    // then(): 응답이 끝나고 난 후 남은 작업을 처리하는 함수
+    // resolve함수가 전달한 값 이어받기
+    promise.then((response)=>{
+      console.log(response);
+    });
+    
+    console.log(4);
+    console.log(5);
+
+  </script>
+
+</body>
+</html>
