@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>    
+    .border-red {
+      border: 2px solid red;
+    }
+    .shopping{
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .product > span{
+      display:inline-block;
+      width: 100px;
+      padding-bottom: 20px;
+    }
+    .product > input{
+      width: 200px;
+    }
+    .calc > span{
+      display:inline-block;
+      width: 300px;
+      padding-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  
+  <section class="shopping">
+
+    <h1 style="font-size: 36px;">온라인 쇼핑 장바구니</h1>
+    
+    <div class="product">
+      <span>상품 이름:</span><input type="text" id="productName">
+      <br>
+      <span>수량:</span><input type="text" id="count" oninput="changeBorder(this);">
+      <br>
+      <span>가격(개당):</span><input type="text" id="price" oninput="changeBorder(this);">
+    </div>
+  
+    <button type="button" onclick="addProduct();">장바구니에 추가</button>
+
+    <h1>장바구니</h1>
+    <div class="cart">
+      <ul id="cartUl">
+
+      </ul>
+    </div>
+    <div class="calc">
+      <span id="totalAmount">총 수량: 0</span>
+      <br>
+      <span id="totalPrice">총 가격: 0원</span>
+    </div>
+  
+  </section>
+
+  <script>
+    
+    function changeBorder(obj) {
+      const regex = /\d/g;
+      if (regex.test(obj.value) || obj.value == "") {
+        obj.className = "";
+      }else{
+        obj.className = "border-red";
+      }
+    }
+
+    function addProduct() {
+      let warningText = "";
+      const regex = /\d/g;
+
+      let textName = document.getElementById("productName");
+      let textCount = document.getElementById("count");
+      let textPrice = document.getElementById("price");
+
+      if (textName.value == "") {
+        warningText += "상품 이름을 입력해주세요.\n";
+      }
+      if (textCount.value == "" || !regex.test(textCount.value)) {
+        warningText += "유효한 수량을 입력해주세요.\n";
+      }
+      if (textPrice.value == "" || !regex.test(textPrice.value)) {
+        warningText += "유효한 가격을 입력해주세요.\n";
+      }
+
+      if(warningText.length > 0){
+        return alert(warningText);
+      }else{
+        let existProduct = document.getElementById(textName.value);
+        let ul = document.getElementById("cartUl");
+        let totalPrice = parseInt(textCount.value) * parseInt(textPrice.value);
+        if(existProduct == null)  {
+          ul.insertAdjacentHTML("beforeend", '<li id="'+ textName.value +'">'+textName.value+' - '+textCount.value+'개 '+ totalPrice.toFixed(2) +'원<button type="button" onclick="remove(this.parentNode);">제거</button></li>');
+        }else{
+          existProduct.insertAdjacentHTML("afterend", '<li id="'+ textName.value +'">'+textName.value+' - '+textCount.value+'개 '+ totalPrice.toFixed(2) +'원<button type="button" onclick="remove(this.parentNode);">제거</button></li>');
+          existProduct.remove();
+        }
+        realtimeCalc();
+      }
+    }
+
+    function remove(obj){
+      obj.remove();
+      realtimeCalc();
+    }
+
+    function realtimeCalc(){
+      let myNodeList = document.getElementById("cartUl").getElementsByTagName("li");
+
+      let totalCount = 0;
+      let totalPrice = 0;
+
+      for (let i = 0; i < myNodeList.length; i++) {
+        let str = myNodeList[i].innerText;
+        let splitStr = str.split(/개 /);
+        let count = splitStr[0].match(/\d+/g);
+        let price = splitStr[1].match(/\d+/g);
+
+        totalCount += parseInt(count);
+        totalPrice += parseInt(count) * parseInt(price);
+      }
+      
+      let amount = document.getElementById("totalAmount");
+      amount.innerText = "총 수량: " + totalCount;
+
+      let price = document.getElementById("totalPrice");
+      if (totalPrice > 0){
+        price.innerText = "총 가격: " + totalPrice.toFixed(2) + "원";
+      }else{
+        price.innerText = "총 가격: 0원";
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
