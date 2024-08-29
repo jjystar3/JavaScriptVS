@@ -94,9 +94,24 @@
         let ul = document.getElementById("cartUl");
         let totalPrice = parseInt(textCount.value) * parseInt(textPrice.value);
         if(existProduct == null)  {
-          ul.insertAdjacentHTML("beforeend", '<li id="'+ textName.value +'">'+textName.value+' - '+textCount.value+'개 '+ totalPrice.toFixed(2) +'원<button type="button" onclick="remove(this.parentNode);">제거</button></li>');
+          ul.insertAdjacentHTML(
+            "beforeend",
+            '<li id="' + textName.value +'">'
+              + textName.value + ' - ' + textCount.value + '개 ' + totalPrice.toFixed(2)
+              + '원<button type="button" onclick="remove(this.parentNode);">제거</button></li>'
+          );
         }else{
-          existProduct.insertAdjacentHTML("afterend", '<li id="'+ textName.value +'">'+textName.value+' - '+textCount.value+'개 '+ totalPrice.toFixed(2) +'원<button type="button" onclick="remove(this.parentNode);">제거</button></li>');
+          let str = existProduct.innerText;
+          let splitStr = str.split(/개 /);
+          let count = parseInt(splitStr[0].match(/\d+/g)) + parseInt(textCount.value);
+          let price = parseInt(splitStr[1].match(/\d+/g)) + parseInt(totalPrice);
+
+          existProduct.insertAdjacentHTML(
+            "afterend",
+            '<li id="' + textName.value  + '">'
+              + textName.value + ' - ' + count + '개 ' + price.toFixed(2)
+              + '원<button type="button" onclick="remove(this.parentNode);">제거</button></li>'
+          );
           existProduct.remove();
         }
         realtimeCalc();
