@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <input type="text" id="userid">
+  <p>p태그1</p>
+  <p>p태그2</p>
+  <p class="para">p태그3</p>
+  <p class="para">p태그4</p>
+
+  <script>
+
+    // document 객체를 사용하여 HTML 요소 찾기
+
+    // 아이디로 input 태그 찾기
+    let userid = document.getElementById("userid");
+    console.log(userid);
+
+    // 태그 이름으로 p 태그 찾기 -> 4개
+    let p = document.getElementsByTagName("p");
+    console.log(p);
+
+    // 클래스 이름으로 p 태그 찾기 -> 2개
+    let para = document.getElementsByClassName("para");
+    console.log(para);
+
+    // 선택자로 클래스가 'para'인 p 태그 찾기
+    let pPara = document.querySelectorAll("p.para");
+    console.log(pPara);
+
+  </script>
+  
+</body>
+</html>
