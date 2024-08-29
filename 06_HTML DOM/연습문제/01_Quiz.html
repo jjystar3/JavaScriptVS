@@ -4,29 +4,130 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .border-red {
+      border: 2px solid red;
+    }
+    .text-red {
+      color: red;
+    }
+
+    .resume{
+      width: 520px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .info{
+      margin-left: 40px;
+    }
+    .info > span{
+      display:inline-block;
+      width: 60px;
+    }
+    .info > input{
+      width: 200px;
+    }
+    .applies{
+      margin-left: 40px;
+    }
+    .letterLimit{
+      text-align: right;
+    }
+  </style>
 </head>
 <body>
   
-  <h1>프론트엔드 개발자 지원서</h1>
-  <p>HTML, CSS, Javascript에 대한 기술적 이해와 경험이 있는 분을 찾습니다.</p>
+  <section class="resume">
 
-  <hr>
+    <h1>프론트엔드 개발자 지원서</h1>
+    <p>HTML, CSS, Javascript에 대한 기술적 이해와 경험이 있는 분을 찾습니다.</p>
+    <hr>
+  
+    <h4>개인정보</h4>
+    <div class="info">
+      <span>이름</span><input type="text" id="name">
+      <br>
+      <span>연락처</span><input type="text" id="tel" oninput="changeBorder();">
+    </div>
+  
+    <h4>지원분야</h4>
+    <div class="applies">
+      <label>
+        <input type="radio" name="apply" id="apply1">웹 퍼블리싱
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="apply" id="apply2">웹 애플리케이션 개발
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="apply" id="apply3">개발 환경 개선
+      </label>
+    </div>
+  
+    <h4>지원동기</h4>
+    <div class="motiv">
+      <textarea id="multi" cols="60" rows="6" oninput="countLength();"></textarea>
+    </div>
+    <div class="letterLimit">
+      <span id="limit">0/30글자</span>
+    </div>
+  
+    <button type="button" onclick="checkEmpty();">접수하기</button>
+    <button type="button">다시 쓰기</button>
+  </section>
 
-  <h4>개인정보</h4>
-  <span>이름</span><input type="text">
-  <br>
-  <span>연락처</span><input type="text">
+  <script>
+    function changeBorder() {
+      const regex = /\d/g;
+      let text = document.getElementById("tel");
+      if (regex.test(text.value) || text.value == "") {
+        text.className = "";
+      }else{
+        text.className = "border-red";
+      }
+    }
 
-  <h4>지원분야</h4>
-  <label>
-    <input type="radio" name="apply" checked>동의
-  </label>
-  <br>
-  <label>
-    <input type="radio" name="apply">동의
-  </label>
+    function countLength(){
+      let textArea = document.getElementById("multi");
+      let textLength = textArea.value.length;
 
-  <h4>지원동기</h4>
+      let title = document.getElementById("limit");
+      title.innerText = textLength + "/30글자";
+
+      if(textLength > 30){
+        textArea.className = "text-red";
+      }else{
+        textArea.className = "";
+      }
+    }
+    
+    function checkEmpty() {
+      let warningText = "";
+
+      let textName = document.getElementById("name");
+      let textTel = document.getElementById("tel");
+      let text1 = document.getElementById("apply1");
+      let text2 = document.getElementById("apply2");
+      let text3 = document.getElementById("apply3");
+
+      if (textName.value == "") {
+        warningText += "이름을 입력해주세요.\n";
+      }
+      if (textTel.value == "") {
+        warningText += "연락처를 입력해주세요.\n";
+      }
+      if (!text1.checked && !text2.checked && !text3.checked) {
+        warningText += "지원 분야를 선택해주세요.\n";
+      }
+
+      if(warningText.length > 0){
+        return alert(warningText);
+      }
+
+    }
+
+  </script>
 
 </body>
 </html>
