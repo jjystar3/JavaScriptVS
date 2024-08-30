@@ -19,18 +19,20 @@
 
     .signInSection{
       display: flex;
-
+      justify-content: center;
     }
 
     .signIn{
+      border:1px solid black;
       width: 600px;
-      margin: 0 auto;
-      padding: 20px;
+      margin: 10px;
+      padding: 30px;
     }
     .signList{
+      border:1px solid black;
       width: 600px;
-      margin: 0 auto;
-      padding: 20px;
+      margin: 10px;
+      padding: 30px;
     }
 
     .info > span{
@@ -72,7 +74,7 @@
     
       <h4>회원기본정보</h4>
       <div class="info">
-        <span>아이디</span><input type="text" id="identify">
+        <span>아이디</span><input type="text" id="identify" placeholder="4-8자 소문자 숫자">
         <br>
         <span>비밀번호</span><input type="text" id="password">
         <br>
@@ -87,7 +89,7 @@
         <input type="text" id="code1">
         -
         <input type="text" id="code2">
-        <button type="button">확인</button>
+        <button type="button" onclick="checkCode();">확인</button>
   
         <br>
         <span>성별</span>
@@ -95,24 +97,24 @@
           <input type="radio" name="gender" id="male">남
         </label>
         <label>
-          <input type="radio" name="apply" id="female">여
+          <input type="radio" name="gender" id="female">여
         </label>
       </div>
     
       <h4>관심분야</h4>
       <div class="hobby">
-        <input type="checkbox" id="checkbox1">
+        <input type="checkbox" id="checkbox1" value="여행">
         <label for="checkbox1">여행</label>
-        <input type="checkbox" id="checkbox2">
+        <input type="checkbox" id="checkbox2" value="영화">
         <label for="checkbox2">영화</label>
-        <input type="checkbox" id="checkbox3">
+        <input type="checkbox" id="checkbox3" value="독서">
         <label for="checkbox3">독서</label>
-        <input type="checkbox" id="checkbox4">
+        <input type="checkbox" id="checkbox4" value="음악">
         <label for="checkbox4">음악</label>
-        <input type="checkbox" id="checkbox5">
+        <input type="checkbox" id="checkbox5" value="관심없음">
         <label for="checkbox5">관심없음</label>      
       </div>
-      <button type="button">회원가입</button>
+      <button type="button" onclick="applySignIn();">회원가입</button>
       <button type="button">다시 쓰기</button>
     </div>
   
@@ -121,67 +123,151 @@
       <p>아래는 회원표입니다.</p>
       <hr>
 
-      <table style="width: 100%; text-align: center;">
-      <tr>
-        <th>아이디</th>
-        <th>이름</th>
-        <th>성별</th>
-        <th>관심분야</th>
-      </tr>
-    </table>
+      <table style="width: 100%; text-align: center;" id="signTable">
+        <tr>
+          <th>아이디</th>
+          <th>이름</th>
+          <th>성별</th>
+          <th>관심분야</th>
+        </tr>
+      </table>
   
     </div>
   </section>
 
 
   <script>
-    function changeBorder() {
-      const regex = /\d/g;
-      let text = document.getElementById("tel");
-      if (regex.test(text.value) || text.value == "") {
-        text.className = "";
-      }else{
-        text.className = "border-red";
-      }
-    }
-
-    function countLength(){
-      let textArea = document.getElementById("multi");
-      let textLength = textArea.value.length;
-
-      let title = document.getElementById("limit");
-      title.innerText = textLength + "/30글자";
-
-      if(textLength > 30){
-        textArea.className = "text-red";
-      }else{
-        textArea.className = "";
-      }
-    }
     
-    function checkEmpty() {
-      let warningText = "";
+    function applySignIn() {
+      const regex = /^[0-9a-z]{4,8}$/;
+      const regex1 = /^[0-9]{6,6}$/;
+      const regex2 = /^[0-9]{7,7}$/;
 
+      let textId = document.getElementById("identify");
+      let textPassword = document.getElementById("password");
+      let textPasswordCheck = document.getElementById("passwordCheck");
       let textName = document.getElementById("name");
-      let textTel = document.getElementById("tel");
-      let text1 = document.getElementById("apply1");
-      let text2 = document.getElementById("apply2");
-      let text3 = document.getElementById("apply3");
 
-      if (textName.value == "") {
-        warningText += "이름을 입력해주세요.\n";
+      let codeFirst = document.getElementById("code1");
+      let codeLast = document.getElementById("code2");
+
+      let m = document.getElementById("male");
+      let f = document.getElementById("female");
+      let isGenderChecked = false;
+      let gender = "";
+
+      let checkbox1 = document.getElementById("checkbox1");
+      let checkbox2 = document.getElementById("checkbox2");
+      let checkbox3 = document.getElementById("checkbox3");
+      let checkbox4 = document.getElementById("checkbox4");
+      let checkbox5 = document.getElementById("checkbox5");
+      let isChecked = false;
+      let hobby = "";
+
+      if(textId.value == ""){
+        return alert("아이디를 입력하세요.");
       }
-      if (textTel.value == "") {
-        warningText += "연락처를 입력해주세요.\n";
+      if(!regex.test(textId.value)){
+        return alert("아이디는 4~8자 소문자 or 숫자");
       }
-      if (!text1.checked && !text2.checked && !text3.checked) {
-        warningText += "지원 분야를 선택해주세요.\n";
+      if(textPassword.value == ""){
+        return alert("비밀번호를 입력하세요.");
+      }
+      if(textPassword.value != textPasswordCheck.value){
+        return alert("비밀번호 확인이 일치하지 않습니다.");
+      }
+      if(textName.value == ""){
+        return alert("이름을 입력하세요.");
+      }
+      
+      if(codeFirst.value == "" && codeLast.value == ""){
+        return alert("주민등록번호를 입력하세요.");
+      }
+      if(!regex1.test(codeFirst.value) || !regex2.test(codeLast.value)){
+        return alert("주민등록번호가 올바르지 않습니다.");
       }
 
-      if(warningText.length > 0){
+      if(m.checked){
+        isGenderChecked=true;
+        gender = "m";
+      }
+      if(f.checked){
+        isGenderChecked=true;
+        gender = "f";
+      }
+
+      if(!isGenderChecked){
+        warningText = "성별을 선택하세요.";
         return alert(warningText);
       }
 
+      if(checkbox1.checked){
+        isChecked = true;
+        hobby += checkbox1.value;
+      }
+      if(checkbox2.checked){
+        isChecked = true;
+        if(hobby.length>0){
+          hobby += ", ";
+        }
+        hobby += checkbox2.value;
+      }
+      if(checkbox3.checked){
+        isChecked = true;
+        if(hobby.length>0){
+          hobby += ", ";
+        }
+        hobby += checkbox3.value;
+      }
+      if(checkbox4.checked){
+        isChecked = true;
+        if(hobby.length>0){
+          hobby += ", ";
+        }
+        hobby += checkbox4.value;
+      }
+      if(checkbox5.checked){
+        isChecked = true;
+        hobby = "없음";
+      }
+
+      if(!isChecked){
+        return alert("관심분야를 최소 하나 이상 선택하세요.");
+      }
+
+      let table = document.getElementById("signTable");
+
+      table.insertAdjacentHTML(
+        "beforeend",
+        '<tr><th>'+ textId.value +'</th><th>'+ textName.value +'</th><th>'+ gender +'</th><th>'+ hobby +'</th></tr>'
+      );
+    }
+
+    function checkCode(){
+      const regex1 = /^[0-9]{6}$/;
+      const regex2 = /^[0-9]{7}$/;
+      let codeFirst = document.getElementById("code1");
+      let codeLast = document.getElementById("code2");
+      
+      let m = document.getElementById("male");
+      let f = document.getElementById("female");
+
+      if(codeFirst.value == "" && codeLast.value == ""){
+        return alert( "주민등록번호를 입력하세요.");
+      }else if(!regex1.test(codeFirst.value) || !regex2.test(codeLast.value)){
+        return alert("주민등록번호가 올바르지 않습니다.");
+      }else{
+        let gender = codeLast.value[0];
+        if(gender == "1" || gender == "3"){
+          m.checked = true;
+        }else if(gender == "2" || gender == "4"){
+          f.checked = true;
+        }else{
+          m.checked = false;
+          f.checked = false;
+          return alert("주민등록번호가 올바르지 않습니다.");
+        }
+      }
     }
 
   </script>
