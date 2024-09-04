@@ -1,6 +1,19 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
 .toDoList{
   width: fit-content;
+  text-align: center;
   margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .insert{
@@ -84,7 +97,7 @@
   color: white;
   background-color: #ccc;
   font-size: 16px;
-  margin: 15px 0 0 10px;
+  margin-top: 15px;
 }
 .btnDelete:hover{
   border: 1px solid #b7b7b7;
