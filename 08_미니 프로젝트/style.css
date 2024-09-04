@@ -90,3 +90,6 @@
 .txtReadOnly{
   background-color: #eee;
 }
+.txtReadOnly:focus {
+  outline-width: 0;
+}
