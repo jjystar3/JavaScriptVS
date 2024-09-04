@@ -25,17 +25,46 @@ function addList(preList) {
   }
 
   if (listTextValue.value != "") {
+
+    let list = document.createElement('div');
+    list.classList.add("list");
+    addedListDiv.appendChild(list);
+
+    let checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.classList.add("chkBox");
+    checkbox.setAttribute("onclick", "toggleFinished(this.parentElement)");
+    checkbox.checked = listTextValue.checked;
+    list.appendChild(checkbox);
+
+    let textlist = document.createElement('input');
+    textlist.type = "text";
+    textlist.classList.add("txtList");
+    textlist.classList.add("txtReadOnly");
+    textlist.value = listTextValue.value;
+    textlist.readOnly = true;
+    list.appendChild(textlist);
+
+    let btn1 = document.createElement('input');
+    btn1.type = "button";
+    btn1.classList.add("btnList");
+    btn1.value = "수정";
+    btn1.setAttribute("onclick", "editList(this.parentElement)");
+    list.appendChild(btn1);
+
+    let btn2 = document.createElement('input');
+    btn2.type = "button";
+    btn2.classList.add("btnList");
+    btn2.value = "삭제";
+    btn2.setAttribute("onclick", "deleteList(this.parentElement)");
+    list.appendChild(btn2);
+
     if(listTextValue.checked){
-      addedListDiv.insertAdjacentHTML(
-        "beforeend",
-        '<div class="list"><input type="checkbox" class="chkBox" onclick="toggleFinished(this.parentElement)" checked><input type="text" class="txtList" value="' + listTextValue.value + '" style="text-decoration: line-through; background-color: #eee;" readonly><input type="button" class="btnList" value="수정" onclick="editList(this.parentElement)" style="text-decoration: line-through; text-decoration-color: #333;"><input type="button" class="btnList" value="삭제" onclick="deleteList(this.parentElement)" style="text-decoration: line-through; text-decoration-color: #333;"></div>'
-      );
-    }else{
-      addedListDiv.insertAdjacentHTML(
-        "beforeend",
-        '<div class="list"><input type="checkbox" class="chkBox" onclick="toggleFinished(this.parentElement)"><input type="text" class="txtList" value="' + listTextValue.value + '" style="background-color: #eee;" readonly><input type="button" class="btnList" value="수정" onclick="editList(this.parentElement)"><input type="button" class="btnList" value="삭제" onclick="deleteList(this.parentElement)"></div>'
-      );
+      textlist.classList.add("crossline");
+      btn1.classList.add("crossline");
+      btn2.classList.add("crossline");
     }
+
   }
 
   listText.value = "";
@@ -48,13 +77,13 @@ function toggleFinished(obj) {
   let btn = obj.querySelectorAll('.btnList');
 
   if (checkBox.checked) {
-    text1.setAttribute("style", "text-decoration: line-through; background-color: #eee;");
-    btn[0].setAttribute("style", "text-decoration: line-through; text-decoration-color: #333;");
-    btn[1].setAttribute("style", "text-decoration: line-through; text-decoration-color: #333;");
+    text1.classList.add("crossline");
+    btn[0].classList.add("crossline");
+    btn[1].classList.add("crossline");
   } else {
-    text1.setAttribute("style", "");
-    btn[0].setAttribute("style", "");
-    btn[1].setAttribute("style", "");
+    text1.classList.remove("crossline");
+    btn[0].classList.remove("crossline");
+    btn[1].classList.remove("crossline");
   }
   
   objIndex = listArr.findIndex(obj => obj.value == text1.value);
@@ -72,7 +101,7 @@ function editList(obj) {
   let btn = obj.querySelectorAll('.btnList');
 
   if (btn[0].value == "수정") {
-    text1.setAttribute("style", "");
+    text1.classList.remove("txtReadOnly", "crossline");
     text1.readOnly = false;
     editText = text1.value;
     btn[0].value = "저장";
@@ -81,12 +110,12 @@ function editList(obj) {
     if (objIndex > -1) {
       listArr[objIndex].value = text1.value;
       if(listArr[objIndex].checked){
-        text1.setAttribute("style", "text-decoration: line-through; background-color: #eee;");
+        text1.classList.add("txtReadOnly", "crossline");
       }else{
-        text1.setAttribute("style", "background-color: #eee;");
+        text1.classList.add("txtReadOnly");
       }
     }
-    localStorage.setItem('saved-list', JSON.stringify(listArr));
+    localStorage.setItem('saved-list', JSON.stringify(listArr));  
     text1.readOnly = true;
     btn[0].value = "수정";
     editText = "";
@@ -123,7 +152,6 @@ function countStatus() {
       checkedCount++;
     }
   }
-
 
   document.getElementById("totalList").textContent = totalCount;
   document.getElementById("compList").textContent = checkedCount;
