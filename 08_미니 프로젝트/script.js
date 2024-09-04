@@ -143,8 +143,9 @@ function deleteAllList() {
   countStatus();
 }
 
-
 function countStatus() {
+  let todoCounts =  document.getElementById('status');
+
   let totalCount = listArr.length;
   let checkedCount = 0;
   for (let i = 0; i < listArr.length; i++) {
@@ -152,7 +153,5 @@ function countStatus() {
       checkedCount++;
     }
   }
-
-  document.getElementById("totalList").textContent = totalCount;
-  document.getElementById("compList").textContent = checkedCount;
+  todoCounts.textContent = `총 ${totalCount}개 완료 ${checkedCount}개`;
 }
