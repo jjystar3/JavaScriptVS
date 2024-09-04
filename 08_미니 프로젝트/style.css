@@ -29,6 +29,10 @@
   background-color: #ccc;
   font-size: 24px;
 }
+.btn:hover{
+  border: 1px solid #b7b7b7;
+  background-color: #b7b7b7;
+}
 
 .txtList{
   height: 100%;
@@ -46,6 +50,10 @@
   border-radius: 5px;
   color: white;
   background-color: #ccc;
+}
+.btnList:hover{
+  border: 1px solid #b7b7b7;
+  background-color: #b7b7b7;
 }
 .btnList + .btnList{  
   margin-left: 10px;
@@ -81,6 +89,10 @@
   background-color: #ccc;
   font-size: 16px;
   margin: 15px 0 0 10px;
+}
+.btnDelete:hover{
+  border: 1px solid #b7b7b7;
+  background-color: #b7b7b7;
 }
 
 .crossline{
