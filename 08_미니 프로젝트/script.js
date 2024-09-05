@@ -1,4 +1,5 @@
 let listArr = [];
+const todoList = document.getElementById('addedList');
 
 let savedList = JSON.parse(localStorage.getItem("saved-list"));
 
@@ -10,7 +11,6 @@ if (savedList != null) {
 }
 
 function addList(preList) {
-  let addedListDiv = document.getElementById("addedList");
   let listText = document.getElementById("listTxt");
   let listTextValue = null;
 
@@ -28,7 +28,7 @@ function addList(preList) {
 
     let list = document.createElement('div');
     list.classList.add("list");
-    addedListDiv.appendChild(list);
+    todoList.appendChild(list);
 
     let checkbox = document.createElement('input');
     checkbox.type = "checkbox";
@@ -60,9 +60,7 @@ function addList(preList) {
     list.appendChild(btn2);
 
     if(listTextValue.checked){
-      textlist.classList.add("crossline");
-      btn1.classList.add("crossline");
-      btn2.classList.add("crossline");
+      list.classList.add("crossline");
     }
 
   }
@@ -74,16 +72,11 @@ function addList(preList) {
 function toggleFinished(obj) {
   let checkBox = obj.querySelector('.chkBox');
   let text1 = obj.querySelector('.txtList');
-  let btn = obj.querySelectorAll('.btnList');
 
   if (checkBox.checked) {
-    text1.classList.add("crossline");
-    btn[0].classList.add("crossline");
-    btn[1].classList.add("crossline");
+    obj.classList.add("crossline");
   } else {
-    text1.classList.remove("crossline");
-    btn[0].classList.remove("crossline");
-    btn[1].classList.remove("crossline");
+    obj.classList.remove("crossline");
   }
   
   objIndex = listArr.findIndex(obj => obj.value == text1.value);
@@ -134,9 +127,8 @@ function deleteList(obj) {
 }
 
 function deleteAllList() {
-  let addedListDiv = document.getElementById("addedList");
-  while (addedListDiv.firstChild) {
-    addedListDiv.removeChild(addedListDiv.firstChild);
+  while (todoList.firstChild) {
+    todoList.removeChild(todoList.firstChild);
   }
   listArr = [];
   localStorage.setItem('saved-list', JSON.stringify(listArr));
@@ -146,21 +138,15 @@ function deleteAllList() {
 function countStatus() {
   let todoCounts =  document.getElementById('status');
 
-  let totalCount = listArr.length;
-  let checkedCount = 0;
-  for (let i = 0; i < listArr.length; i++) {
-    if(listArr[i].checked == true){
-      checkedCount++;
-    }
-  }
+  let totalCount = todoList.children.length;
+  let checkedCount =  todoList.querySelectorAll('input[type="checkbox"]:checked').length;
   todoCounts.textContent = `총 ${totalCount}개 완료 ${checkedCount}개`;
 }
 
 function searchList(){
   let searchText = document.getElementById("searchTxt");
   let filter = searchText.value.toUpperCase();
-  let ul = document.getElementById("addedList");
-  let li = ul.getElementsByTagName('div');
+  let li = todoList.getElementsByTagName('div');
 
   for (i = 0; i < li.length; i++) {
     let a = li[i].querySelector('input[type="text"]');
@@ -171,5 +157,4 @@ function searchList(){
       li[i].style.display = "none";
     }
   }
-
 }
