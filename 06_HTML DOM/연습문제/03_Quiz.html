@@ -120,6 +120,12 @@
       <h1 style="font-size: 36px;">회원정보 목록</h1>
 
       <div class="search">
+        <select id="sel">
+          <option value="0">아이디</option>
+          <option value="1">이름</option>
+          <option value="2">성별</option>
+          <option value="3">관심분야</option>
+        </select>
         <input type="text" id="searchTxt" class="txt" onkeyup="searchList();" placeholder="검색어를 입력하세요..">
       </div>
 
@@ -240,7 +246,7 @@
 
       table.insertAdjacentHTML(
         "beforeend",
-        '<tr><th>'+ textId.value +'</th><th>'+ textName.value +'</th><th>'+ gender +'</th><th>'+ hobby +'</th></tr>'
+        '<tr><th value="searchID">'+ textId.value +'</th><th value="searchName">'+ textName.value +'</th><th value="searchGender">'+ gender +'</th><th value="searchHobby">'+ hobby +'</th></tr>'
       );
     };
 
@@ -272,6 +278,7 @@
     };
 
     function searchList(){
+      let searchType = parseInt(document.getElementById("sel").value);
       let searchText = document.getElementById("searchTxt");
       let filter = searchText.value.toUpperCase();
       let table = document.getElementById('signTable');
@@ -282,10 +289,7 @@
       for (i = 0; i < tr.length; i++) {
         if(tr[i].id != "category"){
           let a = tr[i].querySelectorAll('th');
-          a.forEach(val => {
-            str+=val.textContent;
-          });
-          let txtValue = str;
+          let txtValue = a[searchType].textContent;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {
             tr[i].style.display = "";
           } else {
