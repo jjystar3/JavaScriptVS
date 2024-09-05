@@ -155,3 +155,21 @@ function countStatus() {
   }
   todoCounts.textContent = `총 ${totalCount}개 완료 ${checkedCount}개`;
 }
+
+function searchList(){
+  let searchText = document.getElementById("searchTxt");
+  let filter = searchText.value.toUpperCase();
+  let ul = document.getElementById("addedList");
+  let li = ul.getElementsByTagName('div');
+
+  for (i = 0; i < li.length; i++) {
+    let a = li[i].querySelector('input[type="text"]');
+    let txtValue = a.value;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+
+}
