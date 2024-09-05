@@ -79,17 +79,17 @@ function editList(obj) {
     text1.readOnly = true;
     btn.value = "수정";
   }
-}
+};
 
 function deleteList(obj) {
   obj.remove();
   saveTodos();
-}
+};
 
 function deleteAllList() {
   todoList.innerHTML = '';
   saveTodos();
-}
+};
 
 function saveTodos() {
   const todos = [];  
@@ -103,7 +103,7 @@ function saveTodos() {
   localStorage.setItem('saved-list', JSON.stringify(todos));
 
   countStatus();
-}
+};
 
 function loadTodos() {
   let savedList = JSON.parse(localStorage.getItem("saved-list"));
@@ -113,13 +113,13 @@ function loadTodos() {
   });
 
   countStatus();
-}
+};
 
 function countStatus() {
   let totalCount = todoList.children.length;
   let checkedCount =  todoList.querySelectorAll('input[type="checkbox"]:checked').length;
   todoCounts.textContent = `총 ${totalCount}개 완료 ${checkedCount}개`;
-}
+};
 
 function searchList(){
   let searchText = document.getElementById("searchTxt");
@@ -135,4 +135,4 @@ function searchList(){
       li[i].style.display = "none";
     }
   }
-}
+};
