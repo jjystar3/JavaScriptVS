@@ -118,11 +118,16 @@
   
     <div class="signList">
       <h1 style="font-size: 36px;">회원정보 목록</h1>
+
+      <div class="search">
+        <input type="text" id="searchTxt" class="txt" onkeyup="searchList();" placeholder="검색어를 입력하세요..">
+      </div>
+
       <p>아래는 회원표입니다.</p>
       <hr>
 
       <table style="width: 100%; text-align: center;" id="signTable">
-        <tr>
+        <tr id="category">
           <th>아이디</th>
           <th>이름</th>
           <th>성별</th>
@@ -237,7 +242,7 @@
         "beforeend",
         '<tr><th>'+ textId.value +'</th><th>'+ textName.value +'</th><th>'+ gender +'</th><th>'+ hobby +'</th></tr>'
       );
-    }
+    };
 
     function checkCode(){
       const regex1 = /^[0-9]{6}$/;
@@ -264,8 +269,31 @@
           return alert("주민등록번호가 올바르지 않습니다.");
         }
       }
-    }
+    };
 
+    function searchList(){
+      let searchText = document.getElementById("searchTxt");
+      let filter = searchText.value.toUpperCase();
+      let table = document.getElementById('signTable');
+      let tr = table.getElementsByTagName('tr');
+
+      let str = "";
+
+      for (i = 0; i < tr.length; i++) {
+        if(tr[i].id != "category"){
+          let a = tr[i].querySelectorAll('th');
+          a.forEach(val => {
+            str+=val.textContent;
+          });
+          let txtValue = str;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    };
   </script>
 
 </body>
